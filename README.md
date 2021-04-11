@@ -1,39 +1,26 @@
-<p align="center">
-<img src="https://cdn.jsdelivr.net/gh/vtrois/kratos@3.2.8/assets/img/options/about.png">
-</p>
+# Adams
 
-<p align="center">
-<img src="https://img.shields.io/badge/php-%3E%3D7.0.0-blue">
-<img src="https://img.shields.io/badge/wordpress-v5.8%20alpha%20tested-%234c1">
-<a href="https://vtrois.crowdin.com/kratos" target="_blank"><img src="https://badges.crowdin.net/e/f1d1a7eaa6af337dba7aa4a39b28e67c/localized.svg"></a>
-<a href="https://www.jsdelivr.com/package/gh/vtrois/kratos" target="_blank"><img src="https://data.jsdelivr.com/v1/package/gh/vtrois/kratos/badge?style=rounded"></a>
-<img src="https://img.shields.io/github/license/vtrois/kratos?color=%234c1">
-</p>
+一套适用于 WordPress 的简洁、轻量的 Theme
+![](https://wx1.sinaimg.cn/large/76679337ly1gcj1k23yf7j219r0u00wf.jpg)
 
-English | [简体中文](README.zh-CN.md)
+# 发行
 
-## About
+Github 默认为开发版，如果需要稳定发行版，请前往：https://github.com/Tokinx/Adams/releases
 
-Kratos is a responsive WordPress theme focused on the user reading experience, just for fun 🎉
+下载后进入 WordPress 后台进行安装并启用即可
 
-## Install
+主题设置项在：后台 -> 主题 -> 自定义
 
-1. First download the theme's .zip file from the source file to your local computer.
+# 如何贡献
 
-2. From your WordPress Administration area, head to Appearance > Themes and click `Add New`.
+合理的改动的PR都会被合并，合理的 issues 都会被采纳并修改。
 
-3. The Add New theme screen has a new option, `Upload Theme`.
+# 鸣谢
 
-4. The theme upload form is now open, click `Choose File`, select the theme zip file on your computer and click `Install Now`.
+维护：[Tokin](https://biji.io)
 
-5. The theme can now be activated from the administrator. Select the `Appearance` tab, then open the theme catalog, find the theme, and click the `Activate link`.
+贡献：[@Frank](https://github.com/w4o)、[@Abdul Wahab](https://github.com/abdulwahab610)、[@Sammy Liang](https://github.com/SammyLiang97)、[@刘明野](https://github.com/liumingye)、[@lizhimiao](https://github.com/zhimiaoli)、[@keinx](https://github.com/keinx)
 
-## Changelog
+# 讨论
 
-Detailed changes for each release are documented in the [release notes](https://github.com/vtrois/kratos/releases).
-
-## License
-
-The code is available under the [MIT](https://github.com/vtrois/kratos/blob/main/LICENSE) license.
-
-The document is licensed under a [Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License](http://creativecommons.org/licenses/by-nc-nd/4.0/).
+https://github.com/Tokinx/Adams/issues

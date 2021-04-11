@@ -1,62 +1,121 @@
-<?php
-/**
- * 主题页脚
- * @author Seaton Jiang <seaton@vtrois.com>
- * @license MIT License
- * @version 2020.12.14
- */
-?>
-<div class="k-footer">
-    <div class="f-toolbox">
-        <div class="gotop <?php if ( kratos_option('s_wechat', false) ){ echo 'gotop-haswechat'; } ?>">
-            <div class="gotop-btn">
-                <span class="kicon i-up"></span>
+<footer class="footer">
+    <section class="container">
+        <?php wp_nav_menu(['container' => false, 'theme_location' => 'footer_nav', 'depth' => 0]); ?>
+        <div style="display: flex;justify-content: space-between;">
+            <div class='left'>
+                <span>&copy; <?= date('Y') ?> <a href="<?= get_bloginfo('url') ?>"><?= get_bloginfo('name') ?></a></span>
+                <?php if (get_option('zh_cn_l10n_icp_num')) { ?>
+                    <span> . <a href="http://www.beian.miit.gov.cn" target="_blank"><?= get_option('zh_cn_l10n_icp_num') ?></a></span>
+                <?php } ?>
+            </div>
+            <div class='right'>
+                <span>Theme by <a href="https://biji.io" target="_blank">Adams</a></span>
             </div>
         </div>
-        <?php if ( kratos_option('s_wechat', false) ){ ?>
-        <div class="wechat">
-            <span class="kicon i-wechat"></span>
-            <div class="wechat-pic">
-                <img src="<?php echo kratos_option('s_wechat_url', ASSET_PATH . '/assets/img/wechat.png'); ?>">
-            </div>
-        </div>
-        <?php } ?>
-        <div class="search">
-            <span class="kicon i-find"></span>
-            <form class="search-form" role="search" method="get" action="<?php echo home_url('/'); ?>">
-                <input type="text" name="s" id="search-footer" placeholder="<?php _e('搜点什么呢?', 'kratos'); ?>" style="display:none"/>
-            </form>
-        </div>
+    </section>
+</footer>
+
+<div class="setting_tool iconfont">
+    <a class="back2top" style="display:none;"><i class="czs-arrow-up-l"></i></a>
+    <?php if (!is_home() && !is_front_page()) { ?>
+        <a class="home" href="<?php bloginfo('url'); ?>"><i class="czs-home-l"></i></a>
+    <?php } ?>
+    <a class="sosearch"><i class="czs-search-l"></i></a>
+    <a class="socolor"><i class="czs-clothes-l"></i></a>
+    <div class="s">
+        <form method="get" action="<?php bloginfo('url'); ?>" class="search">
+            <input class="search-key" name="s" autocomplete="off" placeholder="输入关键词..." type="text" value="" required="required">
+        </form>
     </div>
-    <div class="container">
-        <div class="row">
-            <div class="col-12 text-center">
-                <p class="social">
-                <?php
-                    $social = array('s_sina', 's_bilibili', 's_coding', 's_gitee', 's_twitter', 's_telegram', 's_linkedin', 's_youtube', 's_github', 's_stackflow', 's_email');
-                    foreach ($social as $social) {
-                        if (kratos_option($social)) {
-                            echo '<a target="_blank" rel="nofollow" href="' . kratos_option($social . '_url') . '"><i class="kicon i-' . str_replace("s_", "", $social) . '"></i></a>';
-                        }
-                    }
-                ?>
-                </p>
-                <?php
-                    $sitename = get_bloginfo('name');
-                    echo '<p>' . kratos_option('s_copyright', 'COPYRIGHT © 2021 ' . $sitename . '. ALL RIGHTS RESERVED.') . '</p>';
-                    echo '<p>THEME <a href="https://github.com/vtrois/kratos" target="_blank" rel="nofollow">KRATOS</a> MADE BY <a href="https://www.vtrois.com/" target="_blank" rel="nofollow">VTROIS</a></p>';
-                    if (kratos_option('s_icp')) {
-                        echo '<p><a href="https://beian.miit.gov.cn/" target="_blank" rel="nofollow">' . kratos_option('s_icp') . '</a></p>';
-                    }
-                    if (kratos_option('s_gov')) {
-                        echo '<p><a href="' . kratos_option('s_gov_link', '#') . '" target="_blank" rel="nofollow" ><i class="police-ico"></i>' . kratos_option('s_gov') . '</a></p>';
-                    }
-                    if (kratos_option('seo_statistical')) {echo '<p>' . kratos_option('seo_statistical') . '</p>';}
-                ?>
-            </div>
-        </div>
+    <div class="c">
+        <ul>
+            <li class="color undefined">默认</li>
+            <li class="color sepia">护眼</li>
+            <li class="color night">夜晚</li>
+            <li class="hr"></li>
+            <li class="font serif">Serif</li>
+            <li class="font sans">Sans</li>
+        </ul>
     </div>
 </div>
+
 <?php wp_footer(); ?>
+<script data-no-instant>
+    (function ($) {
+        <?php if ( is_user_logged_in() ) { ?>
+        $('#wpadminbar').attr('data-no-instant', '')
+        <?php } ?>
+        $.extend({
+            adamsOverload: function () {
+                $(".post_article a").attr("rel", "external");
+                $("a[rel='external']:not([href^='#']),a[rel='external nofollow']:not([href^='#'])").attr("target", "_blank");
+                $("a.vi,.gallery a,.attachment a").attr("rel", "");
+                <?php if(!get_theme_mod('biji_setting_viewimage')){ ?>
+                $.viewImage({
+                    'target': '.gallery a,.gallery img,.attachment a,.post_article img,.post_article a,a.vi',
+                    'exclude': '.readerswall img,.gallery a img,.attachment a img'
+                });
+                <?php } if(!get_theme_mod('biji_setting_lately')){ ?>
+                Lately({
+                    'target': '.commentmetadata a:first-child,.infos time,.post-list time'
+                });
+                <?php } if(!get_theme_mod('biji_setting_prettify')){ ?>
+                prettyPrint();
+                <?php }?>
+
+                $('ul.links li a').each(function () {
+                    if ($(this).parent().find('.bg').length === 0) {
+                        $(this).parent().append('<div class="bg" style="background-image:url(https://www.google.com/s2/favicons?domain=' + $(this).attr("href") + ')"></div>')
+                    }
+                });
+
+                // * Safari
+                if (navigator.vendor.indexOf("Apple") > -1) {
+                    $("[srcset]").each((index, img) => {
+                        img.outerHTML = img.outerHTML;
+                    });
+                }
+            }
+        });
+    })(jQuery);
+    <?php if (get_theme_mod('biji_setting_footInfo')) {
+        echo get_theme_mod('biji_setting_footInfo') . "\n";
+    }
+    if(!get_theme_mod('biji_setting_pjax')){ ?>
+    InstantClick.on('change', function (isInitialLoad) {
+        jQuery.adamsOverload();
+        if (isInitialLoad === false) {
+            // support MathJax
+            if (typeof MathJax !== 'undefined') MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
+            // support google code prettify
+            if (typeof prettyPrint !== 'undefined') prettyPrint();
+            // support 百度统计
+            if (typeof _hmt !== 'undefined') _hmt.push(['_trackPageview', location.pathname + location.search]);
+            // support google analytics
+            if (typeof ga !== 'undefined') ga('send', 'pageview', location.pathname + location.search);
+        }
+        <?php if(!get_theme_mod('biji_setting_placard')){ ?>
+        if ($('.placard').length) {
+            $.get("https://v1.hitokoto.cn", (data) => {
+                $('.placard').text(data.hitokoto);
+            });
+        }
+        <?php }?>
+    });
+    InstantClick.on('wait', function () {
+        // pjax href click
+    });
+    InstantClick.on('fetch', function () {
+        // pjax begin
+    });
+    InstantClick.on('receive', function () {
+        // pjax end
+    });
+    InstantClick.init('mousedown');
+    <?php } else {?>
+    jQuery.adamsOverload();
+    <?php }?>
+</script>
+<!--网站效率：<?php timer_stop(4); ?>秒内查询了<?= get_num_queries(); ?>次数据库-->
 </body>
 </html>

@@ -1,49 +1,49 @@
-<?php
-/**
- * 首页模板
- * @author Seaton Jiang <seaton@vtrois.com>
- * @license MIT License
- * @version 2020.04.12
- */
+<?php get_header(); ?>
 
-get_header(); ?>
-<div class="k-main <?php echo kratos_option('top_select', 'banner'); ?>" style="background:<?php echo kratos_option('g_background', '#f5f5f5'); ?>">
+<!-- Post List -->
+<section class="posts main-load">
     <div class="container">
-        <div class="row">
-            <div class="col-lg-8 board">
-                <?php if(is_home() && kratos_option('g_carousel', false)){
-                  kratos_carousel();
-                } if(is_search()){ ?>
-                    <div class="article-panel">
-                        <div class="search-title"><?php _e('搜索内容：', 'kratos');the_search_query(); ?></div>
-                    </div>
-                <?php }
-                if ( have_posts() ) {
-					while ( have_posts() ){
-						the_post();
-						get_template_part('/pages/page-content', get_post_format());
-					}
-				}else{ ?>
-                    <div class="article-panel">
-                        <div class="nothing">
-                            <img src="<?php 
-                            if(!kratos_option('g_nothing')){
-                                $img = ASSET_PATH . '/assets/img/nothing.svg';
-                            } else {
-                                $img = kratos_option('g_nothing', ASSET_PATH . '/assets/img/nothing.svg');
-                            }
-                            echo $img; ?>">
-                            <div class="sorry"><?php _e('很抱歉，没有找到任何内容', 'kratos'); ?></div>
-                        </div>
-                    </div>
-                <?php } 
-                pagelist();
-                wp_reset_query(); ?>
-            </div>
-            <div class="col-lg-4 sidebar d-none d-lg-block">
-                <?php dynamic_sidebar('sidebar_tool'); ?>
-            </div>
+        <div class="post-list">
+            <?php if (have_posts()) {
+                while (have_posts()): the_post(); ?>
+                    <article class="meta" itemscope="" itemtype="http://schema.org/BlogPosting">
+                        <header>
+                            <a href="<?php the_permalink(); ?>" itemprop="url"><h2 itemprop="name headline"><?php the_title(); ?></h2></a>
+                        </header>
+                        <main>
+                            <?php if (get_theme_mod('biji_setting_thumb') && post_thumbnail(0, 0)) { ?>
+                                <a href="<?php the_permalink(); ?>" class="thumb"
+                                   style="background-image: url('<?php echo post_thumbnail(200, 140); ?>');"></a>
+                            <?php }; ?>
+                            <p itemprop="articleBody">
+                                <?php if (post_password_required()) {
+                                    the_content();
+                                } else {
+                                    echo mb_strimwidth(strip_shortcodes(strip_tags(apply_filters('the_content', $post->post_excerpt ?: $post->post_content))), 0, 220, '...');
+                                } ?>
+                            </p>
+                        </main>
+                        <footer>
+                            <span class="time"><time datetime="<?php echo get_the_time('c'); ?>" title="<?php echo get_the_time('c'); ?>"
+                                                     itemprop="datePublished" pubdate><?php the_time('Y-m-d'); ?></time>发布</span>
+                            <span class="hr"></span>
+                            <span class="comments"><?php comments_number('0', '1', '%'); ?> 条评论</span>
+                            <?php echo get_post_meta($post->ID, 'dotGood', true) ? '<span class="hr"></span><span class="likes">' . get_post_meta($post->ID, 'dotGood', true) . ' 人喜欢</span>' : ''; ?>
+                        </footer>
+                    </article>
+                <?php endwhile;
+            } else { ?>
+                <article class="meta">
+                    <h3 style="font-size: 3em;margin: 0 0 20px;">Sorry!</h3>
+                    <p>这个页面没有你要找的内容。</p>
+                </article>
+            <?php }; ?>
+            <nav class="reade_more">
+                <?php if (function_exists('pagenavi')) {
+                    pagenavi(1);
+                } ?>
+            </nav>
         </div>
     </div>
-</div>
+</section>
 <?php get_footer(); ?>
